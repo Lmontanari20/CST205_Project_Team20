@@ -6,14 +6,22 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import pyqtSlot
+from PIL import Image
 
-
-display_image_list = ["Choose An Image", "Star", "Image2", "Image3", "Image4"]
+display_image_list = ["Choose An Image", "Star", "Ice", "Cup", "Rock"]
 filter_image_list = ["Choose A Color Filter", "B&W", "RAINBOW", "AUTUMN", "HOT"]
 
 star = cv2.imread("star.jpg")
 star_gray = cv2.imread('star.jpg', cv2.IMREAD_GRAYSCALE)
 
+ice = cv2.imread("ice.png")
+ice_gray = cv2.imread('ice.png', cv2.IMREAD_GRAYSCALE)
+
+cup = cv2.imread("cup.png")
+cup_gray = cv2.imread('cup.png', cv2.IMREAD_GRAYSCALE)
+
+rock = cv2.imread("rock.png")
+rock_gray = cv2.imread('rock.png', cv2.IMREAD_GRAYSCALE)
 
 class Window(QWidget):
     def __init__(self):
@@ -38,7 +46,7 @@ class Window(QWidget):
         self.resize(self.my_image.width(), self.my_image.height())
 
         description_label = QLabel(self)
-        description_label.setText("Choose an Image and Filter to display on your Webcam")
+        description_label.setText("Choose an Image and Filter to display on your Webcam\n To save Webcam Image:Press 's'\n To Quit Webcam: Press 'q'")
 
         v_layout = QVBoxLayout()
         v_layout.addWidget(description_label)
@@ -59,63 +67,90 @@ class Window(QWidget):
         self.setGeometry(200, 200, 200, 200)
 
 
+
     @pyqtSlot()
     def on_click(self):
         fil = self.filter_combo_box.currentText()
         image = self.image_combo_box.currentText()
         my_video = cv2.VideoCapture(0)
 
+        # casc_class = "haarcascade_frontalface_default.xml"
+        # face_cascade = cv2.CascadeClassifier(casc_class)
+
+
         while True:
             ret, frame = my_video.read()
             if fil == 'B&W':
                 if image == "Star":
-                    image = cv2.applyColorMap(star, cv2.COLORMAP_BONE)
+                    image_ = cv2.applyColorMap(star, cv2.COLORMAP_BONE)
                 elif image == "Ice":
-                  image = cv2.applyColorMap(ice, cv2.COLORMAP_BONE)
+                    image_ = cv2.applyColorMap(ice, cv2.COLORMAP_BONE)
                 elif image == "Cup":
-                  image = cv2.applyColorMap(cup, cv2.COLORMAP_BONE)
+                    image_ = cv2.applyColorMap(cup, cv2.COLORMAP_BONE)
                 elif image == "Rock":
-                  image = cv2.applyColorMap(rock, cv2.COLORMAP_BONE)
+                    image_ = cv2.applyColorMap(rock, cv2.COLORMAP_BONE)
                 gray = cv2.applyColorMap(frame, cv2.COLORMAP_BONE)
             elif fil == 'RAINBOW':
                 if image == "Star":
-                    image = cv2.applyColorMap(star, cv2.COLORMAP_RAINBOW)
+                    image_ = cv2.applyColorMap(star, cv2.COLORMAP_RAINBOW)
                 elif image == "Ice":
-                  image = cv2.applyColorMap(ice, cv2.COLORMAP_RAINBOW)
+                    image_ = cv2.applyColorMap(ice, cv2.COLORMAP_RAINBOW)
                 elif image == "Cup":
-                  image = cv2.applyColorMap(cup, cv2.COLORMAP_RAINBOW)
+                    image_ = cv2.applyColorMap(cup, cv2.COLORMAP_RAINBOW)
                 elif image == "Rock":
-                  image = cv2.applyColorMap(rock, cv2.COLORMAP_RAINBOW)
+                    image_ = cv2.applyColorMap(rock, cv2.COLORMAP_RAINBOW)
                 gray = cv2.applyColorMap(frame, cv2.COLORMAP_RAINBOW)
             elif fil == 'AUTUMN':
                 if image == "Star":
-                    image = cv2.applyColorMap(star, cv2.COLORMAP_AUTUMN)
+                    image_ = cv2.applyColorMap(star, cv2.COLORMAP_AUTUMN)
                 elif image == "Ice":
-                  image = cv2.applyColorMap(ice, cv2.COLORMAP_AUTUMN)
+                    image_ = cv2.applyColorMap(ice, cv2.COLORMAP_AUTUMN)
                 elif image == "Cup":
-                  image = cv2.applyColorMap(cup, cv2.COLORMAP_AUTUMN)
+                    image_ = cv2.applyColorMap(cup, cv2.COLORMAP_AUTUMN)
                 elif image == "Rock":
-                  image = cv2.applyColorMap(rock, cv2.COLORMAP_AUTUMN)
+                    image_ = cv2.applyColorMap(rock, cv2.COLORMAP_AUTUMN)
                 gray = cv2.applyColorMap(frame, cv2.COLORMAP_AUTUMN)
             elif fil == 'HOT':
                 if image == "Star":
-                    image = cv2.applyColorMap(star, cv2.COLORMAP_HOT)
+                    image_ = cv2.applyColorMap(star, cv2.COLORMAP_HOT)
                 elif image == "Ice":
-                  image = cv2.applyColorMap(ice, cv2.COLORMAP_HOT)
+                    image_ = cv2.applyColorMap(ice, cv2.COLORMAP_HOT)
                 elif image == "Cup":
-                  image = cv2.applyColorMap(cup, cv2.COLORMAP_HOT)
+                    image_ = cv2.applyColorMap(cup, cv2.COLORMAP_HOT)
                 elif image == "Rock":
-                  image = cv2.applyColorMap(rock, cv2.COLORMAP_HOT)
-                gray = cv2.cvtColor(frame, cv2.COLOR_HOT)
+                    image_ = cv2.applyColorMap(rock, cv2.COLORMAP_HOT)
+                gray = cv2.applyColorMap(frame, cv2.COLORMAP_HOT)
 
-            cv2.imshow("Gray_Version", gray)
+            rows, cols, channels = image_.shape
+            roi = gray[0:rows, 0:cols]
+            image_gray = cv2.cvtColor(image_, cv2.COLOR_BGR2GRAY)
+            ret, mask = cv2.threshold(image_gray, 10,255, cv2.THRESH_BINARY)
+            mask_inv = cv2.bitwise_not(mask)
+
+            gray_bg = cv2.bitwise_and(roi, roi, mask = mask_inv)
+            image_fg = cv2.bitwise_and(image_, image_, mask = mask)
+
+            dst = cv2.add(gray_bg, image_fg)
+            gray[0:rows, 0:cols] = dst
+            cv2.imshow('', gray)
+
+            #cv2.imshow("Gray_Version", gray)
+            #result = cv2.addWeighted(image, 0.5, gray, 0.5,0)
+            # cv2.imshow("", result)
+            # video.write(image)
+            #added this line to see if it will open in 1 Window
+            if cv2.waitKey(1) == ord('s'):
+                cv2.imwrite('Webcam_image.jpg', gray)
             if cv2.waitKey(1) == ord('q'):
                 break
+
+                #cv2.imwrite('Webcam_image.jpg', gray)
 
             #star_gray_new = cv2.applyColorMap(star, cv2.COLORMAP_RAINBOW)
             #cv2.imshow(my_video.selectedimage)
             #cv2.imshow("", gray)
-            cv2.imshow("", image)
+            #cv2.imshow("", image)
+
 
         my_video.release()
         cv2.destroyAllWindows()
