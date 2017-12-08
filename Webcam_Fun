@@ -1,3 +1,9 @@
+# CST-205 Multimedia Design & Progmng
+# Final Project: "Webcam Fun"
+# Authors: Reimer Koopal, Lucas Montanari, Hiren Patel
+# December 11, 2017
+# GitHub link: https://github.com/Lmontanari20/CST205_Project_Team20/tree/master
+
 import sys
 import numpy as np
 import cv2
@@ -8,9 +14,11 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import pyqtSlot
 from PIL import Image
 
+#2 lists to display in the 2 combo boxes
 display_image_list = ["Choose An Image", "Star", "Ice", "Cup", "Rock"]
 filter_image_list = ["Choose A Color Filter", "B&W", "RAINBOW", "AUTUMN", "HOT"]
 
+#reading the four image files
 star = cv2.imread("star.jpg")
 star_gray = cv2.imread('star.jpg', cv2.IMREAD_GRAYSCALE)
 
@@ -23,6 +31,7 @@ cup_gray = cv2.imread('cup.png', cv2.IMREAD_GRAYSCALE)
 rock = cv2.imread("rock.png")
 rock_gray = cv2.imread('rock.png', cv2.IMREAD_GRAYSCALE)
 
+
 class Window(QWidget):
     def __init__(self):
         rgb_value = ''
@@ -33,8 +42,7 @@ class Window(QWidget):
 
         self.my_image = QPixmap("star.jpg")
         self.response_label.setPixmap(self.my_image)
-        #imageResized = my_image.scaled(100,100)
-
+        
 
         self.image_combo_box = QComboBox()
         self.image_combo_box.addItems(display_image_list)
@@ -74,10 +82,8 @@ class Window(QWidget):
         image = self.image_combo_box.currentText()
         my_video = cv2.VideoCapture(0)
 
-        # casc_class = "haarcascade_frontalface_default.xml"
-        # face_cascade = cv2.CascadeClassifier(casc_class)
-
-
+        # While statement goes through the selected filter option by the user
+        # Then depending on which filter the user selects applies the same filter to the image selected by the user
         while True:
             ret, frame = my_video.read()
             if fil == 'B&W':
@@ -134,22 +140,11 @@ class Window(QWidget):
             gray[0:rows, 0:cols] = dst
             cv2.imshow('', gray)
 
-            #cv2.imshow("Gray_Version", gray)
-            #result = cv2.addWeighted(image, 0.5, gray, 0.5,0)
-            # cv2.imshow("", result)
-            # video.write(image)
-            #added this line to see if it will open in 1 Window
+            
             if cv2.waitKey(1) == ord('s'):
                 cv2.imwrite('Webcam_image.jpg', gray)
             if cv2.waitKey(1) == ord('q'):
                 break
-
-                #cv2.imwrite('Webcam_image.jpg', gray)
-
-            #star_gray_new = cv2.applyColorMap(star, cv2.COLORMAP_RAINBOW)
-            #cv2.imshow(my_video.selectedimage)
-            #cv2.imshow("", gray)
-            #cv2.imshow("", image)
 
 
         my_video.release()
