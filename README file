@@ -1,0 +1,11 @@
+Name of project: Webcam Fun
+Names of team members: Reimer Koopal, Lucas Montanari, Hiren Patel 
+Class: CST-205
+Date: December 11,2017 
+How to run program:
+  1. Open Powershell/Terminal and change directories to open vitrual environment
+  2. Change directory (if necessary) and open the program file
+  3. Run the file through Terminal
+  4. Follow the instructions once the GUI opens
+Link to GitHub repository: https://github.com/Lmontanari20/CST205_Project_Team20/blob/master/t.py
+Future work: Modify the code to to track the user and position the image on the user's face
