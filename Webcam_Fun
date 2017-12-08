@@ -3,6 +3,9 @@
 # Authors: Reimer Koopal, Lucas Montanari, Hiren Patel
 # December 11, 2017
 # GitHub link: https://github.com/Lmontanari20/CST205_Project_Team20/tree/master
+# Lucas worked on applying the color filter on webcam 
+# Hiren worked on image filter in the on_click
+# Reimer worked on the on_click function
 
 import sys
 import numpy as np
@@ -19,6 +22,7 @@ display_image_list = ["Choose An Image", "Star", "Ice", "Cup", "Rock"]
 filter_image_list = ["Choose A Color Filter", "B&W", "RAINBOW", "AUTUMN", "HOT"]
 
 #reading the four image files
+
 star = cv2.imread("star.jpg")
 star_gray = cv2.imread('star.jpg', cv2.IMREAD_GRAYSCALE)
 
