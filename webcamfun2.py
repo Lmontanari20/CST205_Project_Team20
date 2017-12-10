@@ -18,23 +18,23 @@ from PyQt5.QtCore import pyqtSlot
 from PIL import Image
 
 #2 lists to display in the 2 combo boxes
-display_image_list = ["Choose An Image", "Christmas", "Happy Birthday", "Dragon", "Thundercat"]
+display_image_list = ["Choose An Image", "Star", "Ice", "Cup", "Rock"]
 filter_image_list = ["Choose A Color Filter", "B&W", "RAINBOW", "AUTUMN", "HOT"]
 size_image_list = ["Choose a size", "small", "medium", "large"]
 
 #reading the four image files
 
-christmas = cv2.imread("christmas.jpg")
-christmas_gray = cv2.imread('christmas.jpg', cv2.IMREAD_GRAYSCALE)
+star = cv2.imread("star.jpg")
+star_gray = cv2.imread('star.jpg', cv2.IMREAD_GRAYSCALE)
 
-birthday = cv2.imread("birthday.jpg")
-birthday_gray = cv2.imread('birthday.jpg', cv2.IMREAD_GRAYSCALE)
+ice = cv2.imread("ice.png")
+ice_gray = cv2.imread('ice.png', cv2.IMREAD_GRAYSCALE)
 
-dragon = cv2.imread("dragon.jpg")
-dragon_gray = cv2.imread('dragon.jpg', cv2.IMREAD_GRAYSCALE)
+cup = cv2.imread("cup.png")
+cup_gray = cv2.imread('cup.png', cv2.IMREAD_GRAYSCALE)
 
-thundercat = cv2.imread("thundercat.jpg")
-thundercat_gray = cv2.imread('thundercat.jpg', cv2.IMREAD_GRAYSCALE)
+rock = cv2.imread("rock.png")
+rock_gray = cv2.imread('rock.png', cv2.IMREAD_GRAYSCALE)
 
 
 
@@ -97,44 +97,44 @@ class Window(QWidget):
         while True:
             ret, frame = my_video.read()
             if fil == 'B&W':
-                if image == "Christmas":
-                    image_ = cv2.applyColorMap(christmas, cv2.COLORMAP_BONE)
-                elif image == "Happy Birthday":
-                    image_ = cv2.applyColorMap(birthday, cv2.COLORMAP_BONE)
-                elif image == "Dragon":
-                    image_ = cv2.applyColorMap(dragon, cv2.COLORMAP_BONE)
-                elif image == "Thundercat":
-                    image_ = cv2.applyColorMap(thundercat, cv2.COLORMAP_BONE)
+                if image == "Star":
+                    image_ = cv2.applyColorMap(star, cv2.COLORMAP_BONE)
+                elif image == "Ice":
+                    image_ = cv2.applyColorMap(ice, cv2.COLORMAP_BONE)
+                elif image == "Cup":
+                    image_ = cv2.applyColorMap(cup, cv2.COLORMAP_BONE)
+                elif image == "Rock":
+                    image_ = cv2.applyColorMap(rock, cv2.COLORMAP_BONE)
                 gray = cv2.applyColorMap(frame, cv2.COLORMAP_BONE)
             elif fil == 'RAINBOW':
-                if image == "Christmas":
-                    image_ = cv2.applyColorMap(christmas, cv2.COLORMAP_RAINBOW)
-                elif image == "Happy Birthday":
-                    image_ = cv2.applyColorMap(birthday, cv2.COLORMAP_RAINBOW)
-                elif image == "Dragon":
-                    image_ = cv2.applyColorMap(dragon, cv2.COLORMAP_RAINBOW)
-                elif image == "Thundercat":
-                    image_ = cv2.applyColorMap(thundercat, cv2.COLORMAP_RAINBOW)
+                if image == "Star":
+                    image_ = cv2.applyColorMap(star, cv2.COLORMAP_RAINBOW)
+                elif image == "Ice":
+                    image_ = cv2.applyColorMap(ice, cv2.COLORMAP_RAINBOW)
+                elif image == "Cup":
+                    image_ = cv2.applyColorMap(cup, cv2.COLORMAP_RAINBOW)
+                elif image == "Rock":
+                    image_ = cv2.applyColorMap(rock, cv2.COLORMAP_RAINBOW)
                 gray = cv2.applyColorMap(frame, cv2.COLORMAP_RAINBOW)
             elif fil == 'AUTUMN':
-                if image == "Christmas":
-                    image_ = cv2.applyColorMap(christmas, cv2.COLORMAP_AUTUMN)
-                elif image == "Happy Birthday":
-                    image_ = cv2.applyColorMap(birthday, cv2.COLORMAP_AUTUMN)
-                elif image == "Dragon":
-                    image_ = cv2.applyColorMap(dragon, cv2.COLORMAP_AUTUMN)
-                elif image == "Thundercat":
-                    image_ = cv2.applyColorMap(thundercat, cv2.COLORMAP_AUTUMN)
+                if image == "Star":
+                    image_ = cv2.applyColorMap(star, cv2.COLORMAP_AUTUMN)
+                elif image == "Ice":
+                    image_ = cv2.applyColorMap(ice, cv2.COLORMAP_AUTUMN)
+                elif image == "Cup":
+                    image_ = cv2.applyColorMap(cup, cv2.COLORMAP_AUTUMN)
+                elif image == "Rock":
+                    image_ = cv2.applyColorMap(rock, cv2.COLORMAP_AUTUMN)
                 gray = cv2.applyColorMap(frame, cv2.COLORMAP_AUTUMN)
             elif fil == 'HOT':
-                if image == "Christmas":
-                    image_ = cv2.applyColorMap(christmas, cv2.COLORMAP_HOT)
-                elif image == "Happy Birthday":
-                    image_ = cv2.applyColorMap(birthday, cv2.COLORMAP_HOT)
-                elif image == "Dragon":
-                    image_ = cv2.applyColorMap(dragon, cv2.COLORMAP_HOT)
-                elif image == "Thundercat":
-                    image_ = cv2.applyColorMap(thundercat, cv2.COLORMAP_HOT)
+                if image == "Star":
+                    image_ = cv2.applyColorMap(star, cv2.COLORMAP_HOT)
+                elif image == "Ice":
+                    image_ = cv2.applyColorMap(ice, cv2.COLORMAP_HOT)
+                elif image == "Cup":
+                    image_ = cv2.applyColorMap(cup, cv2.COLORMAP_HOT)
+                elif image == "Rock":
+                    image_ = cv2.applyColorMap(rock, cv2.COLORMAP_HOT)
                 gray = cv2.applyColorMap(frame, cv2.COLORMAP_HOT)
 
             if size_fil == 'small':
